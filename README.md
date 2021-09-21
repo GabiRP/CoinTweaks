@@ -32,3 +32,5 @@ coin_tweaks:
   # Tails translation
   tails_tranlation: Tails
   ```
+  
+  Plugin demostration: [![Demo](https://medal.tv/clips/65556491/d1337wTo9Ivj?invite=cr-MSxWclEsMTgxODI0NTQs)]()
