@@ -22,7 +22,7 @@ coin_tweaks:
   ```
   # Translations ({port}-translations.yml)
   ```yml
-  coin_tweaks:
+coin_tweaks:
 # Coin result broadcast/hint (if the above config is true) {result} will be replaced with the flip result
   coin_result_message: 'Coin result: {result}'
   # Dropping coin broadcast/hint
