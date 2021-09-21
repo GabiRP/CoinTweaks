@@ -16,7 +16,7 @@ namespace CoinTweaks
         {
             if(coinDropped)
                 coinDropped = false;
-            if (Random.Range(0, 101) <= plugin.Config.DropCoinChance)
+            if (Random.Range(0, 101) <= plugin.Config.DropCoinChance && plugin.Config.DropCoinChance != 0)
             {
                 coinDropped = true;
                 Log.Debug("Dropping coin", plugin.Config.Debug);
