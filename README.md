@@ -34,4 +34,4 @@ coin_tweaks:
   ```
   
   Plugin demostration:
-  ![1632219676-medaltvscpsecretlaboratory20210921120916-tr-edit](https://medal.tv/clips/65556491/d1337p5lbhT1)
+  [![1632219676-medaltvscpsecretlaboratory20210921120916-tr-edit](https://user-images.githubusercontent.com/57387907/134155458-dd27432e-db40-4b19-8b34-6211349a3e54.gif)](https://medal.tv/clips/65556491/d1337p5lbhT1)
