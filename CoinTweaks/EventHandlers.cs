@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
-using Exiled.API.Features.Items;
+﻿using System.Linq;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using MEC;
+using UnityEngine;
 
 namespace CoinTweaks
 {
@@ -8,21 +10,45 @@ namespace CoinTweaks
     {
         private readonly Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
+        private bool coinDropped = false;
 
-        internal void OnFlippingCoin(UsingItemEventArgs ev)
+        internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            if (ev.Item.Type != ItemType.Coin) return;
-            if (UnityEngine.Random.Range(0, 101) <= plugin.Config.DropCoinChance)
+            if(coinDropped)
+                coinDropped = false;
+            if (Random.Range(0, 101) <= plugin.Config.DropCoinChance)
             {
-                ev.Item.Owner.DropItem(ev.Item);
-                if (plugin.Config.UseHints)
+                coinDropped = true;
+                Log.Debug("Dropping coin", plugin.Config.Debug);
+                var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
+                Timing.CallDelayed(1f, () =>
                 {
-                    ev.Player.ShowHint(plugin.Config.DropCoinMessage, plugin.Config.DropCoinMessageDuration);
-                }
-                else
+                    ev.Player.DropItem(coin);
+                    if (plugin.Config.UseHints)
+                    {
+                        ev.Player.ShowHint(plugin.Translation.DropCoinMessage, plugin.Config.DropCoinMessageDuration);
+                    }
+                    else
+                    {
+                        ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage,
+                            Broadcast.BroadcastFlags.Normal, true);
+                    }
+                });
+            }
+            if (plugin.Config.ShowCoinResultMessage && !coinDropped)
+            {
+                Timing.CallDelayed(1.8f, () =>
                 {
-                    ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Config.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
-                }
+                    if (!plugin.Config.UseHints)
+                        ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration,
+                            plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation),
+                            Broadcast.BroadcastFlags.Normal, true);
+                    else
+                        ev.Player.ShowHint(
+                            plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation),
+                            plugin.Config.CoinResultMessageDuration);
+                });
+
             }
         }
     }

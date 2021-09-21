@@ -8,16 +8,21 @@ namespace CoinTweaks
         [Description("Whether or not this plugin is enabled.")]
         public bool IsEnabled { get; set; } = true;
 
+        [Description("Whether or not debug mode is enabled")]
+        public bool Debug { get; set; } = false;
         [Description("Whether broadcast should be replaced with hints")]
         public bool UseHints { get; set; } = true;
 
         [Description("Chance of dropping a coin when flipping it")]
         public int DropCoinChance { get; set; } = 20;
 
-        [Description("Dropping coin broadcast/hint")]
-        public string DropCoinMessage { get; set; } = "You accidentaly dropped your coin while flipping it";
-
         [Description("Duration of drop_coin_message")]
         public ushort DropCoinMessageDuration { get; set; } = 6;
+
+        [Description("Whether a message should be sent or not telling the player his coin flip result (head/tails)")]
+        public bool ShowCoinResultMessage { get; set; } = true;
+
+        [Description("Duration of the above hint/message")]
+        public ushort CoinResultMessageDuration { get; set; } = 6;
     }
 }
