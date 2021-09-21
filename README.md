@@ -34,5 +34,5 @@ coin_tweaks:
   ```
   
   Plugin demostration:
-  https://user-images.githubusercontent.com/57387907/134154772-c947894d-9b6a-477d-9a4d-4fa46ff5a914.mp4
+  [![Demo](https://user-images.githubusercontent.com/57387907/134154772-c947894d-9b6a-477d-9a4d-4fa46ff5a914.mp4)]()
 
