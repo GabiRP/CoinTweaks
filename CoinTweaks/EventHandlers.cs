@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CoinTweaks
@@ -14,25 +15,19 @@ namespace CoinTweaks
 
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            if(coinDropped)
-                coinDropped = false;
-            if (Random.Range(0, 101) <= plugin.Config.DropCoinChance && plugin.Config.DropCoinChance != 0)
+            coinDropped = false;
+            if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(0, 101) <= plugin.Config.DropCoinChance)
             {
                 coinDropped = true;
-                Log.Debug("Dropping coin", plugin.Config.Debug);
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
                 Timing.CallDelayed(1f, () =>
                 {
                     ev.Player.DropItem(coin);
-                    if (plugin.Config.UseHints)
-                    {
+                    if (plugin.Config.UseHints) 
                         ev.Player.ShowHint(plugin.Translation.DropCoinMessage, plugin.Config.DropCoinMessageDuration);
-                    }
+                    
                     else
-                    {
-                        ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage,
-                            Broadcast.BroadcastFlags.Normal, true);
-                    }
+                        ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
                 });
             }
             if (plugin.Config.ShowCoinResultMessage && !coinDropped)
