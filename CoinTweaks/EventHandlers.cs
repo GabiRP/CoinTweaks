@@ -1,9 +1,6 @@
 ﻿using System.Linq;
-using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
-using Unity.Mathematics;
-using UnityEngine;
 
 namespace CoinTweaks
 {
@@ -35,15 +32,10 @@ namespace CoinTweaks
                 Timing.CallDelayed(1.8f, () =>
                 {
                     if (!plugin.Config.UseHints)
-                        ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration,
-                            plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation),
-                            Broadcast.BroadcastFlags.Normal, true);
+                        ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration, plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), Broadcast.BroadcastFlags.Normal, true);
                     else
-                        ev.Player.ShowHint(
-                            plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation),
-                            plugin.Config.CoinResultMessageDuration);
+                        ev.Player.ShowHint(plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), plugin.Config.CoinResultMessageDuration);
                 });
-
             }
         }
     }
