@@ -1,5 +1,7 @@
 # CoinTweaks
 
+**EXILED 3.0 ONLY**
+
 This plugin adds more features (currently 2) for Coins (SCPSL 11.0)
 
 [![Github All Releases](https://img.shields.io/github/downloads/GabiRP/CoinTweaks/total?color=red&style=for-the-badge)]()
