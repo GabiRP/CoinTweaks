@@ -14,7 +14,7 @@ namespace CoinTweaks
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
             coinDropped = false;
-            if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(0, 101) <= plugin.Config.DropCoinChance)
+            if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
                 coinDropped = true;
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
