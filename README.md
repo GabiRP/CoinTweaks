@@ -1,6 +1,6 @@
 # CoinTweaks
 
-This plugin adds (at the moment) 2 options for Coins (SCPSL 11.0)
+This plugin adds more features (currently 2) for Coins (SCPSL 11.0)
 
 # Config
 ```yml
