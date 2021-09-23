@@ -10,7 +10,6 @@ namespace CoinTweaks
         private readonly Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
         private bool coinDropped = false;
-        public List<CoroutineHandle> corHandlers = new List<CoroutineHandle>();
 
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
@@ -19,7 +18,7 @@ namespace CoinTweaks
             {
                 coinDropped = true;
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
-                corHandlers.Add(Timing.CallDelayed(1f, () =>
+                Timing.CallDelayed(1f, () =>
                 {
                     ev.Player.DropItem(coin);
                     if (plugin.Config.UseHints) 
@@ -27,17 +26,17 @@ namespace CoinTweaks
                     
                     else
                         ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
-                }));
+                });
             }
             if (plugin.Config.ShowCoinResultMessage && !coinDropped)
             {
-                corHandlers.Add(Timing.CallDelayed(1.8f, () =>
+                Timing.CallDelayed(1.8f, () =>
                 {
                     if (!plugin.Config.UseHints)
                         ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration, plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), Broadcast.BroadcastFlags.Normal, true);
                     else
                         ev.Player.ShowHint(plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), plugin.Config.CoinResultMessageDuration);
-                }));
+                });
             }
         }
     }

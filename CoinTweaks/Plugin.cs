@@ -11,11 +11,9 @@ namespace CoinTweaks
         public override Version RequiredExiledVersion { get; } = new Version(3, 0, 0);
         
         public EventHandlers EventHandlers;
-        public Plugin Instance;
 
         public override void OnEnabled()
         {
-            Instance = this;
             EventHandlers = new EventHandlers(this);
             Player.FlippingCoin += EventHandlers.OnFlippingCoin;
             base.OnEnabled();
@@ -25,7 +23,6 @@ namespace CoinTweaks
         {
             Player.FlippingCoin += EventHandlers.OnFlippingCoin;
             EventHandlers = null;
-            Instance = null;
             base.OnDisabled();
         }
     }
