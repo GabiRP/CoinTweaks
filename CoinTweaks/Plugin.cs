@@ -1,6 +1,7 @@
 ﻿using System;
 using Exiled.API.Features;
 using Player = Exiled.Events.Handlers.Player;
+using Server = Exiled.Events.Handlers.Server;
 
 namespace CoinTweaks
 {
@@ -16,12 +17,14 @@ namespace CoinTweaks
         {
             EventHandlers = new EventHandlers(this);
             Player.FlippingCoin += EventHandlers.OnFlippingCoin;
+            Server.RoundStarted += EventHandlers.OnRoundStarted;
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.FlippingCoin += EventHandlers.OnFlippingCoin;
+            Player.FlippingCoin -= EventHandlers.OnFlippingCoin;
+            Server.RoundStarted -= EventHandlers.OnRoundStarted;
             EventHandlers = null;
             base.OnDisabled();
         }

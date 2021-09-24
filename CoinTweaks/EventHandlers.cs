@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using MEC;
 
@@ -9,14 +10,22 @@ namespace CoinTweaks
     {
         private readonly Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
-        private bool coinDropped = false;
-
+        private Dictionary<string, bool> coinDropped = new Dictionary<string, bool>();
+        
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            coinDropped = false;
+            Log.Debug($"{ev.Player.Nickname}: {coinDropped[ev.Player.RawUserId]}");
+            if (!coinDropped.ContainsKey(ev.Player.RawUserId))
+            {
+                coinDropped.Add(ev.Player.RawUserId, false);
+            }
+            else
+            {
+                coinDropped[ev.Player.RawUserId] = false;
+            }
             if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
-                coinDropped = true;
+                coinDropped[ev.Player.RawUserId] = true;
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
                 Timing.CallDelayed(1f, () =>
                 {
@@ -28,7 +37,7 @@ namespace CoinTweaks
                         ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
                 });
             }
-            if (plugin.Config.ShowCoinResultMessage && !coinDropped)
+            if (plugin.Config.ShowCoinResultMessage && !coinDropped[ev.Player.RawUserId])
             {
                 Timing.CallDelayed(1.8f, () =>
                 {
@@ -38,6 +47,11 @@ namespace CoinTweaks
                         ev.Player.ShowHint(plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), plugin.Config.CoinResultMessageDuration);
                 });
             }
+        }
+
+        internal void OnRoundStarted()
+        {
+            coinDropped.Clear();
         }
     }
 }
