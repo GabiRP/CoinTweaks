@@ -14,18 +14,17 @@ namespace CoinTweaks
         
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            Log.Debug($"{ev.Player.Nickname}: {coinDropped[ev.Player.RawUserId]}");
-            if (!coinDropped.TryGetValue(ev.Player.RawUserId, out bool coinDrop))
+            if (!coinDropped.ContainsKey(ev.Player.RawUserId))
             {
                 coinDropped.Add(ev.Player.RawUserId, false);
             }
             else
             {
-                coinDrop = false;
+                coinDropped[ev.Player.RawUserId] = false;
             }
             if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
-                coinDrop =  true;
+                coinDropped[ev.Player.RawUserId] =  true;
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
                 Timing.CallDelayed(1f, () =>
                 {
