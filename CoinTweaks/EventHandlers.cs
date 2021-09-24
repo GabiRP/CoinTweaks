@@ -10,21 +10,21 @@ namespace CoinTweaks
     {
         private readonly Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
-        private Dictionary<string, bool> coinDropped = new Dictionary<string, bool>();
-        
+        private List<string> coinDroppedUserIds = new List<string>();
+
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            if (!coinDropped.ContainsKey(ev.Player.RawUserId))
+            if (!coinDroppedUserIds.Contains(ev.Player.RawUserId))
             {
-                coinDropped.Add(ev.Player.RawUserId, false);
+                coinDroppedUserIds.Add(ev.Player.RawUserId);
             }
             else
             {
-                coinDropped[ev.Player.RawUserId] = false;
+                coinDroppedUserIds.Remove(ev.Player.RawUserId);
             }
             if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
-                coinDropped[ev.Player.RawUserId] =  true;
+                coinDroppedUserIds.Add(ev.Player.RawUserId);
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
                 Timing.CallDelayed(1f, () =>
                 {
@@ -36,7 +36,7 @@ namespace CoinTweaks
                         ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
                 });
             }
-            if (plugin.Config.ShowCoinResultMessage && !coinDropped[ev.Player.RawUserId])
+            if (plugin.Config.ShowCoinResultMessage && !coinDroppedUserIds.Contains(ev.Player.RawUserId))
             {
                 Timing.CallDelayed(1.8f, () =>
                 {
@@ -50,7 +50,7 @@ namespace CoinTweaks
 
         internal void OnRoundStarted()
         {
-            coinDropped.Clear();
+            coinDroppedUserIds.Clear();
         }
     }
 }
