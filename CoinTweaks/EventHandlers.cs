@@ -14,19 +14,13 @@ namespace CoinTweaks
 
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            if (!coinDroppedUserIds.Contains(ev.Player.RawUserId))
-            {
-                coinDroppedUserIds.Add(ev.Player.RawUserId);
-            }
-            else
-            {
-                coinDroppedUserIds.Remove(ev.Player.RawUserId);
-            }
+            if (coinDroppedUserIds.Contains(ev.Player.RawUserId)) coinDroppedUserIds.Remove(ev.Player.RawUserId);
+            
             if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
                 coinDroppedUserIds.Add(ev.Player.RawUserId);
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
-                Timing.CallDelayed(1f, () =>
+                Timing.CallDelayed(plugin.Config.DropCoinTime, () =>
                 {
                     ev.Player.DropItem(coin);
                     if (plugin.Config.UseHints) 
@@ -38,7 +32,7 @@ namespace CoinTweaks
             }
             if (plugin.Config.ShowCoinResultMessage && !coinDroppedUserIds.Contains(ev.Player.RawUserId))
             {
-                Timing.CallDelayed(1.8f, () =>
+                Timing.CallDelayed(plugin.Config.CoinResultTime, () =>
                 {
                     if (!plugin.Config.UseHints)
                         ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration, plugin.Translation.CoinResultMessage.Replace("{result}", ev.IsTails ? plugin.Translation.TailsTranlation : plugin.Translation.HeadsTranslation), Broadcast.BroadcastFlags.Normal, true);
