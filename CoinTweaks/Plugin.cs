@@ -1,7 +1,6 @@
 ﻿using System;
 using Exiled.API.Features;
 using Player = Exiled.Events.Handlers.Player;
-using Server = Exiled.Events.Handlers.Server;
 
 namespace CoinTweaks
 {

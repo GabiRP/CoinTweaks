@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs;
+﻿using Exiled.Events.EventArgs;
 using MEC;
 
 namespace CoinTweaks
 {
     public class EventHandlers
     {
-        private readonly Plugin plugin;
+        private Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
 
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
