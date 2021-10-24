@@ -10,15 +10,11 @@ namespace CoinTweaks
     {
         private readonly Plugin plugin;
         public EventHandlers(Plugin plugin) => this.plugin = plugin;
-        private List<string> coinDroppedUserIds = new List<string>();
 
         internal void OnFlippingCoin(FlippingCoinEventArgs ev)
         {
-            if (coinDroppedUserIds.Contains(ev.Player.RawUserId)) coinDroppedUserIds.Remove(ev.Player.RawUserId);
-            
             if (plugin.Config.DropCoinChance != 0 && UnityEngine.Random.Range(1, 101) <= plugin.Config.DropCoinChance)
             {
-                coinDroppedUserIds.Add(ev.Player.RawUserId);
                 var coin = ev.Player.Items.First(x => x.Type == ItemType.Coin);
                 Timing.CallDelayed(plugin.Config.DropCoinTime, () =>
                 {
@@ -29,8 +25,9 @@ namespace CoinTweaks
                     else
                         ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
                 });
+                return;
             }
-            if (plugin.Config.ShowCoinResultMessage && !coinDroppedUserIds.Contains(ev.Player.RawUserId))
+            if (plugin.Config.ShowCoinResultMessage)
             {
                 Timing.CallDelayed(plugin.Config.CoinResultTime, () =>
                 {
@@ -40,11 +37,6 @@ namespace CoinTweaks
                         ev.Player.ShowHint(plugin.Translation.CoinResultMessage.Replace("%result%", ev.IsTails ? plugin.Translation.TailsTranslation : plugin.Translation.HeadsTranslation), plugin.Config.CoinResultMessageDuration);
                 });
             }
-        }
-
-        internal void OnRoundStarted()
-        {
-            coinDroppedUserIds.Clear();
         }
     }
 }

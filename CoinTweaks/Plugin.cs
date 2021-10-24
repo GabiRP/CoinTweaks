@@ -17,14 +17,12 @@ namespace CoinTweaks
         {
             EventHandlers = new EventHandlers(this);
             Player.FlippingCoin += EventHandlers.OnFlippingCoin;
-            Server.RoundStarted += EventHandlers.OnRoundStarted;
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
             Player.FlippingCoin -= EventHandlers.OnFlippingCoin;
-            Server.RoundStarted -= EventHandlers.OnRoundStarted;
             EventHandlers = null;
             base.OnDisabled();
         }
