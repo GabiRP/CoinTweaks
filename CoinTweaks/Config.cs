@@ -7,9 +7,7 @@ namespace CoinTweaks
     {
         [Description("Whether or not this plugin is enabled.")]
         public bool IsEnabled { get; set; } = true;
-
-        [Description("Whether or not debug mode is enabled")]
-        public bool Debug { get; set; } = false;
+        
         [Description("Whether broadcast should be replaced with hints")]
         public bool UseHints { get; set; } = true;
 
