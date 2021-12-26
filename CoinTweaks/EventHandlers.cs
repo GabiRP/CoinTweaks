@@ -1,4 +1,5 @@
-﻿using Exiled.Events.Commands.Show;
+﻿using Exiled.API.Features;
+using Exiled.Events.Commands.Show;
 using Exiled.Events.EventArgs;
 using MEC;
 
@@ -19,7 +20,7 @@ namespace CoinTweaks
                     if (plugin.Config.UseHints) 
                         ev.Player.ShowHint(plugin.Translation.DropCoinMessage, plugin.Config.DropCoinMessageDuration);
                     else
-                        ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, Broadcast.BroadcastFlags.Normal, true);
+                        ev.Player.Broadcast(plugin.Config.DropCoinMessageDuration, plugin.Translation.DropCoinMessage, shouldClearPrevious: true);
                 });
                 return;
             }

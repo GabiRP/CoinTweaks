@@ -8,7 +8,8 @@ namespace CoinTweaks
     {
         public override string Name => "CoinTweaks";
         public override string Author => "GabiRP";
-        public override Version RequiredExiledVersion { get; } = new Version(3, 0, 5);
+        public override Version Version => new Version(1, 0, 7);
+        public override Version RequiredExiledVersion => new Version(4,0,0);
         
         EventHandlers EventHandlers;
 
