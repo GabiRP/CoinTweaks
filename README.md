@@ -14,29 +14,33 @@ coin_tweaks:
 # Whether or not this plugin is enabled.
   is_enabled: true
   # Whether or not debug mode is enabled
-  debug: true
+  debug: false
   # Whether broadcast should be replaced with hints
   use_hints: true
-  # Chance of dropping a coin when flipping it
+  # Chance of dropping a coin while flipping it (set to 0 to disable)
   drop_coin_chance: 20
+  # Time before dropping the coin
+  drop_coin_time: 1
   # Duration of drop_coin_message
   drop_coin_message_duration: 6
   # Whether a message should be sent or not telling the player his coin flip result (head/tails)
   show_coin_result_message: true
+  # Time before showing the result
+  coin_result_time: 1.79999995
   # Duration of the above hint/message
-  coin_result_message_duration: 2
+  coin_result_message_duration: 1
   ```
   # Translations ({port}-translations.yml)
   ```yml
 coin_tweaks:
-# Coin result broadcast/hint (if the above config is true) {result} will be replaced with the flip result
-  coin_result_message: 'Coin result: {result}'
+# Coin result broadcast/hint (if the above config is true) %result% will be replaced with the flip result
+  coin_result_message: 'Coin result:'
   # Dropping coin broadcast/hint
   drop_coin_message: You accidentaly dropped your coin while flipping it
   # Heads translation
   heads_translation: Heads
   # Tails translation
-  tails_tranlation: Tails
+  tails_translation: Tails
   ```
   
   Plugin demostration:
