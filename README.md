@@ -2,7 +2,7 @@
 
 This EXILED plugin adds more features (currently 2) for Coins
 
-[![Github All Releases](https://img.shields.io/github/downloads/GabiRP/CoinTweaks/total?color=red&style=for-the-badge)]()
+[Github All Releases](https://img.shields.io/github/downloads/GabiRP/CoinTweaks/total?color=red&style=for-the-badge)
 
 # Features
 * Chance of dropping a coin when flipping it
