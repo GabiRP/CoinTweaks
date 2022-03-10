@@ -29,9 +29,9 @@ namespace CoinTweaks
                 Timing.CallDelayed(plugin.Config.CoinResultTime, () =>
                 {
                     if (plugin.Config.UseHints)
-                        ev.Player.ShowHint($"{plugin.Translation.CoinResultMessage} {(ev.IsTails ? plugin.Translation.TailsTranslation : plugin.Translation.HeadsTranslation)}", plugin.Config.CoinResultMessageDuration);
+                        ev.Player.ShowHint($"{plugin.Translation.CoinResultMessage.Replace("$result", ev.IsTails ? plugin.Translation.TailsTranslation : plugin.Translation.HeadsTranslation)}", plugin.Config.CoinResultMessageDuration);
                     else
-                        ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration, $"{plugin.Translation.CoinResultMessage} {(ev.IsTails ? plugin.Translation.TailsTranslation : plugin.Translation.HeadsTranslation)}");
+                        ev.Player.Broadcast(plugin.Config.CoinResultMessageDuration, $"{plugin.Translation.CoinResultMessage.Replace("$result", ev.IsTails ? plugin.Translation.TailsTranslation : plugin.Translation.HeadsTranslation)}");
                 });
             }
         }
